@@ -1,0 +1,5 @@
+[toolchain]
+# liveback と同じく具体バージョンに固定。`stable` だと stable 更新日に clippy が赤くなる。
+channel = "1.97.1"
+targets = ["x86_64-pc-windows-msvc"]
+components = ["rustfmt", "clippy"]
