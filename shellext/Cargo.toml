@@ -1,0 +1,29 @@
+# ストア版 (MSIX) の右クリックの上段メニュー。`packaging/AppxManifest.xml` の
+# `com:SurrogateServer` が DllHost.exe に読ませる (root/t261110-1641、t261110-4d52)。
+# GitHub 版 (Inno Setup・zip) には入らない。
+[package]
+name = "manent-shell"
+version = "0.0.0"
+edition = "2024"
+license = "MIT"
+publish = false
+
+[lib]
+name = "manent_shell"
+crate-type = ["cdylib"]
+
+[dependencies]
+toml = "1"
+windows-core = "0.62"
+
+[dependencies.windows]
+version = "0.62"
+features = [
+    "Win32_Foundation",
+    "Win32_Globalization",
+    "Win32_System_Com",
+    "Win32_System_LibraryLoader",
+    "Win32_System_SystemServices",
+    "Win32_UI_Shell",
+    "Win32_UI_Shell_Common",
+]

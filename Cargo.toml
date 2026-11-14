@@ -1,0 +1,95 @@
+[package]
+name = "manent"
+version = "1.0.0"
+edition = "2024"
+license = "MIT"
+repository = "https://github.com/koorinonaka/manent"
+homepage = "https://github.com/koorinonaka/manent"
+
+# `shellext` はストア版 (MSIX) の右クリックの上段メニューの DLL (t261110-4d52)。
+# default-members に入れて、`cargo build`・`cargo clippy`・`cargo test` がコマンドを変えずに両方を覆う。
+[workspace]
+members = ["shellext"]
+default-members = [".", "shellext"]
+
+[dependencies]
+gif = "0.14.2"
+lz4_flex = "0.14.0"
+quantette = { version = "0.6.0", default-features = false, features = ["threads"] }
+serde = { version = "1", features = ["derive"] }
+toml = "1"
+windows-numerics = "0.3"
+
+[dependencies.windows]
+version = "0.62"
+features = [
+    "ApplicationModel",
+    "Data_Json",
+    "Foundation",
+    "Foundation_Metadata",
+    "Win32_Devices_Display",
+    "Graphics_Capture",
+    "Graphics_DirectX",
+    "Graphics_DirectX_Direct3D11",
+    "Storage_Streams",
+    "Win32_Foundation",
+    "Win32_Globalization",
+    "Win32_Graphics_Direct2D",
+    "Win32_Graphics_Direct2D_Common",
+    "Win32_Graphics_Direct3D",
+    "Win32_Graphics_Direct3D11",
+    "Win32_Graphics_DirectComposition",
+    "Win32_Graphics_DirectWrite",
+    "Win32_Graphics_Dwm",
+    "Win32_Graphics_Dxgi",
+    "Win32_Graphics_Dxgi_Common",
+    "Win32_Graphics_Gdi",
+    "Win32_Graphics_Imaging",
+    "Win32_Media",
+    "Win32_Security",
+    "Win32_Storage_Packaging_Appx",
+    "Win32_System_Com",
+    "Win32_System_Com_StructuredStorage",
+    "Win32_System_DataExchange",
+    "Win32_System_LibraryLoader",
+    "Win32_System_Memory",
+    "Win32_System_Ole",
+    "Win32_System_ProcessStatus",
+    "Win32_System_Registry",
+    "Win32_System_SystemInformation",
+    "Win32_System_Threading",
+    "Win32_System_Variant",
+    "Win32_System_WinRT",
+    "Win32_System_WinRT_Direct3D11",
+    "Win32_System_WinRT_Graphics_Capture",
+    "Win32_UI_Accessibility",
+    "Win32_UI_Controls",
+    "Win32_UI_HiDpi",
+    "Win32_UI_Input_KeyboardAndMouse",
+    "Win32_UI_Shell",
+    "Win32_UI_Shell_Common",
+    "Win32_UI_Shell_PropertiesSystem",
+    "Win32_UI_WindowsAndMessaging",
+    "Web_Http",
+    "Web_Http_Filters",
+    "Web_Http_Headers",
+]
+
+[features]
+# 処理時間の計測 (`src/insight.rs`)。既定はオフで、配布の `cargo build --release` には入らない。
+# feature を付けても `--insight` で起動しなければ何も測らない。
+insight = []
+
+[build-dependencies]
+winresource = "0.1"
+
+# debug ビルドでも依存 (lz4_flex・gif・quantette) は最適化する。GIF ピンの展開と GIF の書き出しが
+# 依存の中で回るので、debug の exe が実用の速さになる。自分のコードは opt-level 0 のまま (ビルドが速い)。
+[profile.dev.package."*"]
+opt-level = 3
+
+# exe が 14% 小さくなる (2,522,112 → 2,162,176 バイト、release + insight)。clean のビルドは 32 → 48 秒。
+# 速さは測れる差が無かった。lz4_flex の unsafe の経路 (default-features = false) も測って外した (t261110-5bcd)。
+[profile.release]
+lto = "fat"
+codegen-units = 1
