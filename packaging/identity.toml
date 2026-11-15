@@ -1,0 +1,13 @@
+# MSIX のマニフェストの Identity (scripts/New-Msix.ps1 が packaging/AppxManifest.xml に埋める)。
+# [store] は Partner Center で名前を予約したときの値 (Product identity) と一致しなければならない。
+# [local] は手元の Add-AppxPackage -Register で確かめるための値。ストアには出せない。
+
+[local]
+name = "ManentLocal"
+publisher = "CN=ManentLocal"
+publisher_display_name = "ManentLocal"
+
+[store]
+name = "koorinonaka.Manent"
+publisher = "CN=665C001C-8134-4A76-8CD9-8A203E0CF0AB"
+publisher_display_name = "koorinonaka"
