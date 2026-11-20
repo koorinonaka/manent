@@ -1,0 +1,167 @@
+/* Manent マニュアル (manual.html)。LP の style.css の後に読む。
+   土台 (.lp のリセット、言語の木の切り替え) と色 (.lp-a のテーマの値、prefers-color-scheme: light) は style.css のものを使う。
+   組みの値は canvas「Manent Manual」(task t261114-afcd の manual.js) と同じ。 */
+
+/* .lp の overflow: hidden は sticky (目次の列、帯、図) を止めるので外す */
+.m { --m: 32px; --inset: 20px; --rail: 232px; --rail-gap: 56px; --col-gap: 48px; --t-head: clamp(32px, 3.1vw, 44px); --t-lead: 26px;
+  overflow: visible; font: 400 17px/1.7 var(--font-text); }
+.m-vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+.nw { white-space: nowrap; }
+:where(.m) :where(h2, h3, dt) { scroll-margin-top: 24px; }
+
+/* ページの頭: LP へ戻る名前、ページの名前、GitHub、JA / EN、ダウンロード */
+.m-head { display: flex; align-items: center; justify-content: space-between; gap: 16px 24px; min-height: 72px; padding: 0 var(--m); }
+.m-brand { display: flex; align-items: baseline; gap: 12px; font: 600 20px/28px var(--font-display); letter-spacing: -0.01em; white-space: nowrap; }
+.m-brand-p { font-weight: 400; color: var(--soft); }
+.m-nav { display: flex; align-items: center; gap: 4px 24px; font: 400 14px/24px var(--font-text); }
+.m-nav > a { padding: 4px 0; }
+.m-nav-act { font-weight: 600; text-decoration: underline; text-underline-offset: 5px; }
+.m-lang { display: inline-flex; gap: 2px; }
+.m-lang button { min-width: 36px; height: 32px; padding: 0 6px; border-radius: 4px; font: 400 14px/32px var(--font-text); color: var(--soft); }
+.m-lang button[aria-pressed="true"] { font-weight: 600; color: var(--ink); }
+.m-lang button:hover { background: var(--fill-hover); color: var(--ink); }
+
+/* 本文: 左に目次の列、真ん中に読む欄、右にステージ (LP の「画面」を右へ移したもの) */
+.m-body { display: grid; grid-template-columns: var(--rail) minmax(0, 1fr); column-gap: var(--rail-gap); padding-left: var(--m); }
+.m-rail { position: sticky; top: 0; align-self: start; max-height: 100vh; overflow-y: auto; overscroll-behavior: contain; padding: 48px 0 24px; scrollbar-width: thin; }
+.m-main { min-width: 0; padding-right: var(--inset); }
+
+/* 目次: DS の設定窓のナビの行 (ホバーは fill-subtle、今いる節は 3 x 16 の印と太字) */
+.m-toc-h { padding: 0 12px 8px; font: 600 14px/20px var(--font-text); color: var(--soft); }
+.m-toc a { position: relative; display: block; padding: 6px 12px; border-radius: 4px; font: 400 14px/20px var(--font-text); color: var(--ink); }
+.m-toc a:hover { background: var(--fill-subtle); }
+.m-toc .is-open > a { font-weight: 600; }
+.m-toc-s { padding-bottom: 6px; }
+.m-toc-s a { padding: 5px 12px 5px 24px; color: var(--soft); }
+.m-toc-s a[aria-current] { color: var(--ink); font-weight: 600; }
+.m-toc a::before { content: ""; position: absolute; left: 0; top: 50%; width: var(--size-indicator-width); height: var(--size-indicator-height); margin-top: calc(var(--size-indicator-height) / -2); border-radius: var(--radius-4); background: var(--on-fill); opacity: 0; }
+.m-toc a[aria-current]::before { opacity: 1; }
+/* JS があるときだけ、今いる章のほかの節を畳む (JS が無ければ全部の節が出て、どれへも飛べる) */
+.js .m-toc li:not(.is-open) > .m-toc-s { display: none; }
+
+/* 1023 px 以下の目次: 頭の下の帯 (<details>)。開いた一覧は本文の上に重ね、本文を押し下げない */
+.m-tocm { display: none; position: sticky; top: 0; z-index: 5; background: var(--st); }
+.m-tocm > summary { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 var(--m); list-style: none; cursor: pointer; font: 400 14px/20px var(--font-text); }
+.m-tocm > summary::-webkit-details-marker { display: none; }
+.m-tocm-l { font-weight: 600; }
+.m-tocm-c { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--soft); }
+.m-tocm[open] > summary .o-ico { rotate: 180deg; }
+.m-tocm .m-toc { position: absolute; left: 0; right: 0; top: 100%; max-height: calc(100vh - 48px); overflow-y: auto; overscroll-behavior: contain; padding: 0 calc(var(--m) - 12px) 16px; background: var(--st); box-shadow: 0 12px 24px rgba(0,0,0,.24); }
+.m-tocm .m-toc-h { display: none; }
+
+/* 大見出しと章 */
+.m-hero { padding-top: 48px; }
+.m-h1 { font: 600 clamp(48px, 6.2vw, 88px)/1.04 var(--font-display); letter-spacing: -0.03em; }
+.m-lead { max-width: 30em; font: 400 26px/1.5 var(--font-display); letter-spacing: -0.005em; text-wrap: balance; }
+.m-hero-row { margin-top: 28px; }
+.m-hero-row > .m-stg { padding-bottom: 0; }
+.m-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--col-gap); }
+.m-row.is-wide { grid-template-columns: minmax(0, 1fr); }
+/* 1200 px 以上: 章を 2 列の grid にし、行はその中に溶かす。図のステージは --r 行目から --n 行 (次の図の行の手前か章の終わり) をまたぎ、図は sticky で残る */
+.m-ch { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--col-gap); }
+.m-ch > .m-row { display: contents; }
+.m-ch .m-txt { grid-column: 1; grid-row: var(--r); }
+.m-ch .m-stg { grid-column: 2; grid-row: var(--r) / span var(--n); }
+.m-ch > .m-row.is-wide > .m-txt { grid-column: 1 / -1; }
+.m-txt { min-width: 0; padding-bottom: 64px; }
+.m-row.is-head > .m-txt { padding: 120px 0 48px; }
+/* ステージ: 図は 1 枚ごとに 1 つの面。横の見出しの高さに揃え、その節を読む間は上に残す */
+.m-stg { min-width: 0; padding-bottom: 64px; }
+.m-row.is-head > .m-stg { margin-top: 120px; }
+.m-stg > .m-fig { position: sticky; top: 24px; }
+.m-h2 { font: 600 var(--t-head)/1.15 var(--font-display); letter-spacing: -0.01em; }
+.m-sum { max-width: 38em; margin-top: 12px; }
+.m-h3 { font: 600 var(--t-lead)/1.3 var(--font-display); letter-spacing: -0.005em; }
+.m-txt > p, .m-txt > ul, .m-txt > ol { max-width: 38em; }
+.m-txt > * + * { margin-top: 12px; }
+.m-txt > .m-h3 + * { margin-top: 16px; }
+.m-txt > .m-note, .m-txt > .m-tbl { margin-top: 24px; }
+.m-txt > .m-note + .m-note { margin-top: 12px; }
+.m-txt > .m-tbl + p { margin-top: 20px; }
+.m-qa { max-width: 38em; margin-top: 24px; }
+.m-qa dt { font-weight: 600; }
+.m-qa dd { margin: 4px 0 0; }
+.m-qa dd + dt { margin-top: 20px; }
+.m-list { list-style: disc; padding-left: 1.3em; }
+.m-steps { list-style: decimal; padding-left: 1.6em; }
+.m-list li + li, .m-steps li + li { margin-top: 8px; }
+.m-steps li::marker { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* キー: DS の keycap (塗り keycap、角丸 4、Semibold) を 14 px に合わせた */
+.m-combo { font: inherit; white-space: nowrap; }
+.m-key { display: inline-block; min-width: 26px; height: 24px; padding: 0 7px; border-radius: var(--radius-4); background: var(--keycap); font: 600 14px/24px var(--font-text); color: var(--ink); text-align: center; vertical-align: 1px; }
+.m-plus { padding: 0 3px; color: var(--soft); }
+/* 表: 本物の表。行を separator の線で分け、キーは右に揃える (DS のメニューのホットキーと同じ側) */
+.m-tbl { width: 100%; max-width: 38em; border-collapse: collapse; }
+.m-tbl td { padding: 9px 0; border-bottom: 1px solid var(--separator); vertical-align: middle; }
+.m-tbl tr:first-child td { border-top: 1px solid var(--separator); }
+.m-tbl td + td { padding-left: 24px; text-align: right; white-space: nowrap; }
+/* 注記: 塗りの面で、線は引かない。ヒントはステージの色、注意は DS の警告の帯 (danger-wash と error) */
+.m-note { display: grid; grid-template-columns: 18px minmax(0, 1fr); column-gap: 12px; max-width: 38em; padding: 14px 18px 14px 16px; border-radius: var(--radius-4); background: var(--st); }
+.m-note > .o-ico { margin-top: 5.5px; color: var(--ink); }
+.m-note.is-caution { background: var(--danger-wash); }
+.m-note.is-caution > .o-ico { color: var(--danger); }
+.m-note-t { margin-right: 10px; font-weight: 600; }
+
+/* 図: --st の面 (16:9 か 4:3)、角丸 8。小さい静止画は拡大せず、面の中央に等倍で置く */
+.m-fig { position: relative; display: flex; align-items: center; justify-content: center; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 8px; background: var(--st); }
+.m-fig.is-43 { aspect-ratio: 4 / 3; }
+.m-fig > img { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; }
+.m-fig.is-gif > img { width: 100%; }
+/* 動く図のボタン: 画像の右下から 12。画像の上の面なのでテーマに関係なく DS の veil のダークの値 */
+.m-fig-btn { position: absolute; right: 12px; bottom: 12px; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: var(--radius-4); background: rgba(10,10,12,.9); color: #FFFFFF; }
+.m-fig-btn:hover { background: rgba(40,40,46,.92); }
+.m-fig-btn[hidden] { display: none; }
+.m-fig-btn .o-ico { width: 20px; height: 20px; }
+.m-fig-btn .is-play, .m-fig-btn.is-paused .is-pause { display: none; }
+.m-fig-btn.is-paused .is-play { display: block; }
+
+/* フッター: LP と同じ 1 行 */
+.m-foot { display: grid; grid-template-columns: 1fr auto 1fr; align-items: baseline; gap: 8px 24px; padding: 120px var(--m) 30px; font: 400 14px/24px var(--font-text); color: var(--soft); }
+.m-foot nav { display: flex; flex-wrap: wrap; gap: 4px 24px; }
+.m-foot nav a { color: var(--ink); }
+.m-foot-r { text-align: right; }
+
+/* 動き: 目次の印の移動 (120 ms)、図の入り (下から上がって出る、1 回だけ)。reduced-motion では止める */
+@media (prefers-reduced-motion: no-preference) {
+  .m-toc a::before { transition: opacity .12s ease-out; }
+  .m-tocm > summary .o-ico { transition: rotate .12s ease-out; }
+  .js .m-fig.is-pre { opacity: 0; translate: 0 16px; }
+  .js .m-fig { transition: opacity .36s cubic-bezier(.2,.7,.3,1), translate .36s cubic-bezier(.2,.7,.3,1); }
+}
+
+@media (max-width: 1199px) {
+  .m { --rail: 200px; --rail-gap: 40px; }
+  .m-main { padding-right: var(--m); }
+  .m-row { grid-template-columns: minmax(0, 1fr); }
+  .m-ch { display: block; }
+  .m-ch > .m-row { display: grid; }
+  .m-ch .m-txt, .m-ch .m-stg { grid-column: auto; grid-row: auto; }
+  .m-row.has-fig > .m-txt { padding-bottom: 24px; }
+  /* (0,2,0) なので、3 列のときの .m-row.is-head > .m-stg にも勝つ */
+  .m-row > .m-stg, .m-row.is-head > .m-stg { margin: 0 0 64px; padding: 0; }
+  .m-hero-row > .m-stg { margin: 32px 0 0; }
+  .m-stg > .m-fig { position: relative; top: 0; }
+}
+@media (max-width: 1023px) {
+  .m-tocm { display: block; }
+  .m-body { display: block; padding: 0 var(--m); }
+  .m-rail { display: none; }
+  .m-main { padding-right: 0; }
+  .m-sum, .m-txt > p, .m-txt > ul, .m-txt > ol, .m-note, .m-tbl, .m-qa { max-width: none; }
+  .m-hero { padding-top: 32px; }
+  :where(.m) :where(h2, h3, dt) { scroll-margin-top: 72px; }
+  .m-foot { grid-template-columns: minmax(0, 1fr); padding: 96px var(--m) 24px; }
+  .m-foot-r { text-align: left; }
+}
+@media (max-width: 767px) {
+  .m { --m: 20px; --t-lead: 22px; }
+  .m-head { min-height: 60px; }
+  .m-nav .is-wide { display: none; }
+  .m-h1 { font-size: 40px; }
+  .m-hero-row { margin-top: 16px; }
+  .m-lead { font-size: 19px; }
+  .m-row.is-head > .m-txt { padding-top: 88px; }
+  .m-hero-row > .m-stg { margin-top: 24px; }
+  .m-foot { padding-top: 80px; }
+}

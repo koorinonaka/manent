@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manent | プライバシーポリシー / Privacy Policy</title>
+<link rel="icon" href="assets/favicon.ico">
+<style>
+  :root { color-scheme: light dark; --ink: #1d1d1f; --soft: #6e6e73; --bg: #fff; --line: #d2d2d7; }
+  @media (prefers-color-scheme: dark) { :root { --ink: #f5f5f7; --soft: #a1a1a6; --bg: #111; --line: #3a3a3c; } }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.8 system-ui, "Segoe UI", "Yu Gothic UI", sans-serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 48px 16px 80px; }
+  h1 { font-size: 28px; line-height: 1.3; margin: 0 0 8px; }
+  h2 { font-size: 20px; margin: 40px 0 8px; }
+  p, li { margin: 0 0 12px; }
+  .meta, footer { color: var(--soft); font-size: 14px; }
+  section + section { border-top: 1px solid var(--line); margin-top: 64px; padding-top: 48px; }
+  a { color: inherit; }
+  code { font-size: 14px; }
+</style>
+</head>
+<body>
+<main>
+<p class="meta"><a href="./">Manent</a> · <a href="#en">English</a></p>
+
+<section id="ja" lang="ja">
+<h1>プライバシーポリシー</h1>
+<p class="meta">最終更新日: 2026 年 11 月 10 日</p>
+<p>このページは、Windows 用のピン留めキャプチャツール Manent (以下「本アプリ」) が扱う情報を説明します。対象は Microsoft Store 版と、GitHub で配布するインストーラ版・ポータブル版です。</p>
+
+<h2>集める情報</h2>
+<p>本アプリは個人情報を集めません。アカウントの登録はありません。利用状況の統計、広告、クラッシュレポートの送信もありません。</p>
+
+<h2>撮った画面</h2>
+<p>撮った画面はメモリの中だけに置き、外部へ送りません。ファイルになるのは、利用者がコピーまたは保存の操作をしたときだけです。</p>
+<ul>
+<li>コピーした画像は Windows のクリップボードに入ります。</li>
+<li>保存した画像は、利用者が選んだフォルダに書きます。既定のフォルダはピクチャです。</li>
+<li>GIF をコピーするときは、一時フォルダ (<code>%TEMP%\Manent</code>) に GIF ファイルを作ります。</li>
+</ul>
+
+<h2>PC に保存する情報</h2>
+<ul>
+<li>設定は <code>%APPDATA%\Manent\settings.toml</code> に保存します。</li>
+<li>Windows の「既定のアプリ」で本アプリを画面キャプチャに選べるように、現在のユーザーのレジストリ (<code>HKEY_CURRENT_USER</code>) に本アプリを登録します。</li>
+<li>サインイン時の起動とエクスプローラーの右クリックメニューは、設定でオンのときだけ同じレジストリに書きます。</li>
+</ul>
+<p>これらは PC の中だけにあり、外部へ送りません。</p>
+
+<h2>通信</h2>
+<p>Microsoft Store 版は通信しません。更新は Microsoft Store が行います。</p>
+<p>GitHub で配布する版は、更新の確認のためだけに通信します。</p>
+<ul>
+<li>起動の後と 24 時間ごとに、GitHub の API (<code>api.github.com</code>) へ最新のリリースを問い合わせます。</li>
+<li>利用者が設定の更新のボタンを押したときだけ、新しいインストーラを GitHub からダウンロードします。</li>
+<li>送る情報は通常の HTTPS のリクエストだけで、本アプリが独自の情報を付け加えることはありません。IP アドレスなどのリクエストの情報は GitHub が受け取り、<a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub のプライバシーステートメント</a>に従って扱います。</li>
+<li>設定で更新の確認をオフにすると、本アプリは外部と一切通信しません。</li>
+</ul>
+
+<h2>第三者への提供</h2>
+<p>本アプリは情報を集めないため、第三者に提供する情報はありません。</p>
+
+<h2>このポリシーの変更</h2>
+<p>内容を変えるときは、このページを更新し、最終更新日を改めます。</p>
+
+<h2>問い合わせ</h2>
+<p>質問は <a href="https://github.com/koorinonaka/manent/issues">GitHub の Issues</a> で受け付けます。</p>
+</section>
+
+<section id="en" lang="en">
+<h1>Privacy Policy</h1>
+<p class="meta">Last updated: November 10, 2026</p>
+<p>This page explains what information Manent, a pinning screen capture tool for Windows (“the app”), handles. It covers the Microsoft Store version and the installer and portable versions distributed on GitHub.</p>
+
+<h2>Information we collect</h2>
+<p>The app collects no personal information. There is no account. The app sends no usage statistics, no ads and no crash reports.</p>
+
+<h2>Your captures</h2>
+<p>Captures stay in memory and are never sent anywhere. They become files only when you copy or save them.</p>
+<ul>
+<li>A copied image goes to the Windows clipboard.</li>
+<li>A saved image is written to the folder you choose. The default is Pictures.</li>
+<li>Copying a GIF writes a GIF file to the temporary folder (<code>%TEMP%\Manent</code>).</li>
+</ul>
+
+<h2>Information stored on your PC</h2>
+<ul>
+<li>Settings are stored in <code>%APPDATA%\Manent\settings.toml</code>.</li>
+<li>The app registers itself in the current user's registry (<code>HKEY_CURRENT_USER</code>) so that you can choose it for screen capture in Windows Default apps.</li>
+<li>Start at sign-in and the File Explorer context menu are written to the same registry only while they are on in Settings.</li>
+</ul>
+<p>This information stays on your PC and is never sent anywhere.</p>
+
+<h2>Network</h2>
+<p>The Microsoft Store version makes no network connections. Microsoft Store handles its updates.</p>
+<p>The versions distributed on GitHub connect only to check for updates.</p>
+<ul>
+<li>After start-up and every 24 hours, the app asks the GitHub API (<code>api.github.com</code>) for the latest release.</li>
+<li>Only when you press the Update button in Settings does the app download the new installer from GitHub.</li>
+<li>The app sends an ordinary HTTPS request and adds no information of its own. GitHub receives the request details, such as your IP address, and handles them under the <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub General Privacy Statement</a>.</li>
+<li>Turn off the update check in Settings, and the app makes no network connections at all.</li>
+</ul>
+
+<h2>Sharing with third parties</h2>
+<p>The app collects no information, so it has nothing to share with third parties.</p>
+
+<h2>Changes to this policy</h2>
+<p>When this policy changes, this page is updated along with the date above.</p>
+
+<h2>Contact</h2>
+<p>Send questions through <a href="https://github.com/koorinonaka/manent/issues">GitHub Issues</a>.</p>
+</section>
+
+<footer><p>© 2026 koorinonaka · <a href="./">Manent</a></p></footer>
+</main>
+</body>
+</html>
