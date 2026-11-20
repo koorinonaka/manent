@@ -1,0 +1,5 @@
+# C ランタイム (VCRUNTIME140.dll) を exe と manent_shell.dll に静的に埋める。
+# 動的のままだと、Visual C++ 再頒布可能パッケージの無い PC で起動できない。
+# ストア審査 10.2.4.1 で実際に落ちた (2026-11-15)。
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-C", "target-feature=+crt-static"]

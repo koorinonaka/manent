@@ -1,0 +1,11 @@
+# 公開スナップショットは `git archive` で作る (root/t261109-1f7f)。
+# ここに書いた行はそのツリーから落ちる -- `git clone` には効かない。
+.agents/ export-ignore
+.claude/ export-ignore
+.vscode/ export-ignore
+.github/ export-ignore
+CLAUDE.md export-ignore
+docs/design.md export-ignore
+run.bat export-ignore
+# LP のソースと Showreel は公開の main に載せない (gh-pages へは pages.yml が送る。root/t261109-ddd7)
+site/ export-ignore
